@@ -43,6 +43,7 @@ h2.title em{margin-left:.12em;font-family:var(--script);font-style:normal;font-w
 
 /* buttons */
 .btn{display:inline-block;font-family:var(--sans);font-size:11px;font-weight:500;letter-spacing:.26em;text-transform:uppercase;padding:16px 30px;border-radius:999px;transition:all .3s ease}
+button.btn{border:0;cursor:pointer}
 .btn-blush{background:var(--blush);color:var(--espresso)}
 .btn-blush:hover{background:var(--espresso);color:var(--cream)}
 .btn-line{border:1px solid currentColor}
@@ -102,10 +103,26 @@ header .logo,nav a{text-shadow:0 1px 10px rgba(58,41,34,.45)}
 
 /* examples */
 .examples{padding:120px 0}
-.examples-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:56px}
-.example-tile{aspect-ratio:9/16;border-radius:14px;display:flex;align-items:flex-end;padding:18px;
-  background:linear-gradient(170deg,var(--cream-2) 0%,var(--blush) 55%,var(--blush-deep) 100%);border:1px solid rgba(191,160,119,.3)}
-.example-tile span{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--espresso);background:rgba(250,246,240,.75);padding:6px 12px;border-radius:999px}
+.tabs{display:flex;flex-wrap:wrap;justify-content:center;gap:10px;margin:44px auto 0;max-width:900px}
+.tab{font-family:var(--sans);font-size:11px;font-weight:400;letter-spacing:.2em;text-transform:uppercase;color:var(--brown);background:transparent;border:1px solid rgba(191,160,119,.55);padding:12px 22px;border-radius:999px;cursor:pointer;transition:all .25s ease}
+.tab:hover{border-color:var(--blush-deep);color:var(--espresso)}
+.tab[aria-selected="true"]{background:var(--espresso);border-color:var(--espresso);color:var(--cream)}
+.examples-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin-top:40px}
+.example-tile{position:relative;aspect-ratio:9/16;border-radius:14px;overflow:hidden;
+  background:linear-gradient(170deg,var(--cream-2) 0%,var(--blush) 55%,var(--blush-deep) 100%);border:1px solid rgba(191,160,119,.3);animation:fadeIn .45s ease both}
+.example-tile[hidden]{display:none}
+.example-tile video,.example-tile img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.example-tile .play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:58px;height:58px;border-radius:50%;background:rgba(250,246,240,.82);display:grid;place-items:center;transition:transform .3s ease;pointer-events:none}
+.example-tile .play::after{content:"";margin-left:4px;border-left:15px solid var(--espresso);border-top:9px solid transparent;border-bottom:9px solid transparent}
+.example-tile:hover .play{transform:translate(-50%,-50%) scale(1.08)}
+.example-tile .label{position:absolute;left:14px;right:14px;bottom:14px;display:flex;flex-direction:column;gap:2px;background:rgba(250,246,240,.9);padding:10px 14px;border-radius:12px}
+.example-tile .cat{font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--gold)}
+.example-tile .ttl{font-family:var(--serif);font-size:17px;line-height:1.25;color:var(--espresso)}
+.example-tile.placeholder .ttl{font-style:italic;color:var(--brown)}
+.more-wrap{text-align:center;margin-top:40px}
+.more-wrap[hidden]{display:none}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media (prefers-reduced-motion:reduce){.example-tile{animation:none}}
 
 /* banner */
 .banner{height:460px;background:url('images/banner.jpg') center 60%/cover no-repeat;position:relative}
@@ -160,6 +177,14 @@ footer{background:var(--cream);padding:80px 5vw 40px;border-top:1px solid rgba(1
   .services-photo{height:300px;border-radius:160px 160px 12px 12px}
   .services-grid,.testimonials-grid{grid-template-columns:1fr}
   .model-gallery,.examples-grid{grid-template-columns:repeat(2,1fr)}
+  .tabs{justify-content:flex-start;flex-wrap:nowrap;overflow-x:auto;margin-left:-22px;margin-right:-22px;padding:0 22px 6px;scrollbar-width:none}
+  .tabs::-webkit-scrollbar{display:none}
+  .tab{flex:none;padding:11px 18px}
+  .example-tile .play{top:40%;width:44px;height:44px}
+  .example-tile .play::after{border-left-width:12px;border-top-width:7px;border-bottom-width:7px}
+  .example-tile .label{left:8px;right:8px;bottom:8px;padding:8px 10px;border-radius:10px}
+  .example-tile .cat{font-size:8px;letter-spacing:.14em}
+  .example-tile .ttl{font-size:14px}
   .modeling{padding-top:80px}
   .banner{height:280px}
   .testimonials{padding:80px 0}
@@ -266,16 +291,97 @@ footer{background:var(--cream);padding:80px 5vw 40px;border-top:1px solid rgba(1
         <p class="eyebrow">Portfolio</p>
         <h2 class="title">Recent <em>Work</em></h2>
       </div>
-      <div class="examples-grid">
-        <div class="example-tile"><span>Category / Title</span></div>
-        <div class="example-tile"><span>Category / Title</span></div>
-        <div class="example-tile"><span>Category / Title</span></div>
-        <div class="example-tile"><span>Category / Title</span></div>
-        <div class="example-tile"><span>Category / Title</span></div>
-        <div class="example-tile"><span>Category / Title</span></div>
-        <div class="example-tile"><span>Category / Title</span></div>
-        <div class="example-tile"><span>Category / Title</span></div>
+      <div class="tabs" role="tablist" aria-label="Filter videos by category">
+        <button class="tab" role="tab" aria-selected="true" data-filter="all">All</button>
+        <button class="tab" role="tab" aria-selected="false" data-filter="supplements">Supplements & Fitness</button>
+        <button class="tab" role="tab" aria-selected="false" data-filter="motherhood">Motherhood & Parenting</button>
+        <button class="tab" role="tab" aria-selected="false" data-filter="beauty">Beauty & Skincare</button>
+        <button class="tab" role="tab" aria-selected="false" data-filter="instore">On-Site & In-Store</button>
+        <button class="tab" role="tab" aria-selected="false" data-filter="more">Pets, Tech & More</button>
       </div>
+      <div class="examples-grid" id="examplesGrid">
+        <div class="example-tile placeholder" data-cat="supplements">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Supplements & Fitness</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="motherhood">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Motherhood & Parenting</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="beauty">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Beauty & Skincare</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="instore">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">On-Site & In-Store</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="more">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Pets, Tech & More</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="supplements">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Supplements & Fitness</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="motherhood">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Motherhood & Parenting</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="beauty">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Beauty & Skincare</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="instore">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">On-Site & In-Store</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="more">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Pets, Tech & More</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="supplements">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Supplements & Fitness</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="motherhood">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Motherhood & Parenting</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="beauty">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Beauty & Skincare</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="instore">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">On-Site & In-Store</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="more">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Pets, Tech & More</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="supplements">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Supplements & Fitness</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="motherhood">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Motherhood & Parenting</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="beauty">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Beauty & Skincare</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="instore">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">On-Site & In-Store</span><span class="ttl">Video coming soon</span></div>
+        </div>
+        <div class="example-tile placeholder" data-cat="more">
+          <span class="play" aria-hidden="true"></span>
+          <div class="label"><span class="cat">Pets, Tech & More</span><span class="ttl">Video coming soon</span></div>
+        </div>
+      </div>
+      <div class="more-wrap" id="moreWrap"><button class="btn btn-blush" id="moreBtn" type="button">View All Work</button></div>
     </div>
   </section>
 
@@ -336,5 +442,42 @@ footer{background:var(--cream);padding:80px 5vw 40px;border-top:1px solid rgba(1
   <div class="credit">© 2026 Nikki Rhine</div>
 </footer>
 
+
+<script>
+(function(){
+  var ALL_LIMIT=8, expanded=false, current='all';
+  var tabs=[].slice.call(document.querySelectorAll('.tab'));
+  var tiles=[].slice.call(document.querySelectorAll('#examplesGrid .example-tile'));
+  var moreWrap=document.getElementById('moreWrap'), moreBtn=document.getElementById('moreBtn');
+  function render(){
+    var shown=0, matches=0;
+    tiles.forEach(function(t){
+      var match=current==='all'||t.dataset.cat===current;
+      if(match) matches++;
+      var show=match&&(current!=='all'||expanded||shown<ALL_LIMIT);
+      t.hidden=!show; if(show) shown++;
+      if(!show){var v=t.querySelector('video'); if(v&&!v.paused) v.pause();}
+    });
+    moreWrap.hidden=!(current==='all'&&!expanded&&matches>ALL_LIMIT);
+  }
+  tabs.forEach(function(b){
+    b.addEventListener('click',function(){
+      tabs.forEach(function(x){x.setAttribute('aria-selected',x===b?'true':'false')});
+      current=b.dataset.filter; render();
+    });
+  });
+  moreBtn.addEventListener('click',function(){expanded=true;render();});
+  // Tap a video tile to play/pause (used once real videos are added)
+  tiles.forEach(function(t){
+    var v=t.querySelector('video'); if(!v) return;
+    t.style.cursor='pointer';
+    t.addEventListener('click',function(){
+      document.querySelectorAll('#examplesGrid video').forEach(function(o){if(o!==v)o.pause()});
+      if(v.paused){v.play();t.classList.add('playing');}else{v.pause();t.classList.remove('playing');}
+    });
+  });
+  render();
+})();
+</script>
 </body>
 </html>
