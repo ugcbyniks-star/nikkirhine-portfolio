@@ -62,8 +62,8 @@ header .logo,nav a{text-shadow:0 1px 10px rgba(58,41,34,.45)}
 .hero .eyebrow{color:var(--champagne)}
 .hero .eyebrow::before{background:var(--champagne)}
 .hero h1{font-family:var(--script);font-weight:400;font-size:clamp(76px,10vw,150px);line-height:.9;margin:0}
-.hero .tagline{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2vw,26px);color:var(--champagne);margin:14px 0 36px;max-width:440px;line-height:1.4}
-.hero .actions{display:flex;gap:14px;flex-wrap:wrap}
+.hero .tagline{font-family:var(--serif);font-style:italic;font-size:clamp(20px,2vw,26px);color:var(--champagne);margin:14px 0 36px;max-width:min(440px,38vw);line-height:1.4}
+.hero .actions{display:flex;gap:14px;flex-wrap:wrap;max-width:36vw}
 
 /* marquee */
 .marquee{background:var(--espresso);overflow:hidden;white-space:nowrap;padding:18px 0;border-top:1px solid var(--gold);border-bottom:1px solid var(--gold)}
@@ -149,8 +149,8 @@ footer{background:var(--cream);padding:80px 5vw 40px;border-top:1px solid rgba(1
     background:linear-gradient(180deg,rgba(58,41,34,.05) 0%,rgba(58,41,34,.2) 42%,rgba(58,41,34,.86) 78%),url('images/hero.jpg') 64% center/cover no-repeat}
   .hero .eyebrow{justify-content:center;letter-spacing:.24em}
   .hero .eyebrow::before{display:none}
-  .hero .tagline{margin-left:auto;margin-right:auto}
-  .hero .actions{justify-content:center}
+  .hero .tagline{margin-left:auto;margin-right:auto;max-width:440px}
+  .hero .actions{justify-content:center;max-width:none}
   .about{padding:80px 0}
   .about .wrap{grid-template-columns:1fr;gap:56px;text-align:center}
   .arch{width:min(320px,82%);margin:0 auto}
